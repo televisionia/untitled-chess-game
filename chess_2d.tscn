@@ -1,6 +1,34 @@
-[gd_scene load_steps=2 format=3 uid="uid://dd1f466dwc0ob"]
+[gd_scene load_steps=12 format=3 uid="uid://dd1f466dwc0ob"]
 
 [ext_resource type="Script" path="res://Chess_Script.gd" id="1_1j5yn"]
+[ext_resource type="AudioStream" uid="uid://m7amqehb0kxe" path="res://Sounds/Piece_Kill_1.wav" id="2_vvarn"]
+[ext_resource type="AudioStream" uid="uid://crwl82cxjlg65" path="res://Sounds/Select_Piece_1.wav" id="3_c66fg"]
+[ext_resource type="AudioStream" uid="uid://c47c7ga7kfjkt" path="res://Sounds/Piece_Kill_2.wav" id="3_xxydp"]
+[ext_resource type="AudioStream" uid="uid://dt1h2t8bjm3xb" path="res://Sounds/Select_Piece_2.wav" id="4_rvj86"]
+[ext_resource type="AudioStream" uid="uid://brpfk7rseaob0" path="res://Sounds/Bad.wav" id="4_v4guw"]
+[ext_resource type="AudioStream" uid="uid://bvnc2gi1v0q13" path="res://Sounds/Move_Piece_1.wav" id="4_x8mo3"]
+[ext_resource type="AudioStream" uid="uid://c65eyl4e573a0" path="res://Sounds/Move_Piece_2.wav" id="5_y5kig"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_50us5"]
+streams_count = 2
+stream_0/stream = ExtResource("3_c66fg")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("4_rvj86")
+stream_1/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0v53q"]
+streams_count = 2
+stream_0/stream = ExtResource("4_x8mo3")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("5_y5kig")
+stream_1/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2onlw"]
+streams_count = 2
+stream_0/stream = ExtResource("2_vvarn")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("3_xxydp")
+stream_1/weight = 1.0
 
 [node name="Chess2D" type="Control"]
 layout_mode = 3
@@ -12,3 +40,17 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1j5yn")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Select" type="AudioStreamPlayer" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_50us5")
+
+[node name="Move" type="AudioStreamPlayer" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_0v53q")
+
+[node name="Kill" type="AudioStreamPlayer" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_2onlw")
+
+[node name="Deny" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_v4guw")

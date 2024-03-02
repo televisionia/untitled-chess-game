@@ -39,35 +39,16 @@ var BASE_LAYER = 0
 var PIECE_LAYER = 1
 var OVERLAY_LAYER = 2
 
-
-
 func make_layer(layer):
-	if get_node("Layer" + str(layer)) == null:
-		var board = LAYER_OBJECT.instantiate()
-		board.name = "Layer" + str(layer)
-		board.columns = BOARD_COLUMNS
-		add_child(board)
-		board.set_owner(self)
-		LAYERS.insert(layer, [])
+	LAYERS.insert(layer, [])
 
-		board.anchor_left = 0.5
-		board.anchor_right = 0.5
-		board.anchor_top = 0.5
-		board.anchor_bottom = 0.5
-		
-		
-		board.size.x = 400
-		var square_height = size.x / BOARD_COLUMNS
-		board.size.y = square_height * BOARD_ROWS
-		
-		return board
-	return null
+
 
 
 func setup_base(layer):
 	make_layer(layer)
 	var layer_slots = LAYERS[layer]
-
+	
 	for row in range(BOARD_ROWS):
 		layer_slots.insert(row, [])
 		for column in range(BOARD_COLUMNS):
@@ -139,35 +120,60 @@ func setup_overlay(layer):
 			layer_slots[row].insert(column, SLOT_ID.EMPTY)
 
 func clear_layer(layer):
+	print("clearing layer")
 	var grid = get_node("Layer" + str(layer))
 	for object in grid.get_children():
 		grid.remove_child(object)
 		object.queue_free()
+	remove_child(grid)
+	grid.queue_free()
+
+func make_layer_node(layer):
+	if get_node_or_null("Layer" + str(layer)) != null:
+		clear_layer(layer)
+	
+	var board = LAYER_OBJECT.instantiate()
+	board.name = "Layer" + str(layer)
+	board.columns = BOARD_COLUMNS
+	add_child(board)
+	board.set_owner(self)
+
+	board.anchor_left = 0.5
+	board.anchor_right = 0.5
+	board.anchor_top = 0.5
+	board.anchor_bottom = 0.5
+	
+	
+	board.size.x = 400
+	var square_height = size.x / BOARD_COLUMNS
+	board.size.y = square_height * BOARD_ROWS
+	
+	return board
 
 func draw_layer(layer_id):
 	var layer = LAYERS[layer_id]
-	clear_layer(layer_id)
+	var layer_object = make_layer_node(layer_id)
 	
-	var layer_object = get_node("Layer" + str(layer_id))
-	for row in layer:
-		for column in row:
-			var new_object = SLOT_OBJECTS[column].instantiate()
-			new_object.add_to_group(str(new_object.name))
-			layer_object.add_child(new_object)
-			new_object.owner = layer_object
-			new_object.mouse_filter = 2
-			if column >= SLOT_ID.LIGHT_PIECE_PAWN and column <= SLOT_ID.DARK_PIECE_KING:
-				var new_button = PIECE_BUTTON.instantiate()
-				
-				new_object.add_child(new_button)
-				new_button.owner = new_object
-				new_button.pressed.connect(self._piece_selected.bind(new_object))
-			elif column == SLOT_ID.PATH:
-				var new_button = PATH_BUTTON.instantiate()
-				
-				new_object.add_child(new_button)
-				new_button.owner = new_object
-				new_button.pressed.connect(self._path_selected.bind(new_object))
+	if layer_object != null:
+		for row in layer:
+			for column in row:
+				var new_object = SLOT_OBJECTS[column].instantiate()
+				new_object.add_to_group(str(new_object.name))
+				layer_object.add_child(new_object)
+				new_object.owner = layer_object
+				new_object.mouse_filter = 2
+				if column >= SLOT_ID.LIGHT_PIECE_PAWN and column <= SLOT_ID.DARK_PIECE_KING:
+					var new_button = PIECE_BUTTON.instantiate()
+					
+					new_object.add_child(new_button)
+					new_button.owner = new_object
+					new_button.pressed.connect(self._piece_selected.bind(new_object))
+				elif column == SLOT_ID.PATH:
+					var new_button = PATH_BUTTON.instantiate()
+					
+					new_object.add_child(new_button)
+					new_button.owner = new_object
+					new_button.pressed.connect(self._path_selected.bind(new_object))
 
 func draw_board():
 	var i = 0
@@ -254,6 +260,7 @@ func create_paths(piece, path_list, diag_path_list, attack_list, diag_attack_lis
 
 func _piece_selected(piece):
 	SELECTED_PIECE = piece
+	var is_dark = false
 	var piece_index = SELECTED_PIECE.get_index()
 	var piece_type = SELECTED_PIECE.get_groups()[0]
 	match piece_type:
@@ -643,7 +650,12 @@ func _piece_selected(piece):
 			
 			)
 		_:
+			is_dark = true
 			create_paths(piece_index, null, null, null, null)
+	if is_dark == false:
+		get_node("Sounds/Select").play()
+	else:
+		get_node("Sounds/Deny").play()
 
 func _path_selected(path):
 	if SELECTED_PIECE == null:
@@ -658,10 +670,16 @@ func _path_selected(path):
 	var piece_column = piece_index % BOARD_COLUMNS
 	var piece_row = (piece_index - piece_index % BOARD_COLUMNS) / BOARD_ROWS
 	
-	piece_slots[location_row][location_column] = piece_slots[piece_row][piece_column]
-	piece_slots[piece_row][piece_column] = SLOT_ID.EMPTY
+	if location_column >= 0 and location_column < BOARD_COLUMNS and location_row >= 0 and location_row < BOARD_ROWS:
+		if piece_slots[location_row][location_column] == SLOT_ID.EMPTY:
+			get_node("Sounds/Move").play()
+		else:
+			get_node("Sounds/Kill").play()
+		piece_slots[location_row][location_column] = piece_slots[piece_row][piece_column]
+		piece_slots[piece_row][piece_column] = SLOT_ID.EMPTY
 	setup_overlay(OVERLAY_LAYER)
-	draw_board()
+	draw_layer(OVERLAY_LAYER)
+	draw_layer(PIECE_LAYER)
 
 # Called when the node enters the scene tree for the first time.Piece_Control
 func _ready():
