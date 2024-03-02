@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b8gsams5f0bay" path="res://Images/Base/Empty.png" id="1_kf4v7"]
 
-[node name="EMPTY" type="TextureRect"]
+[node name="LIGHT_PAWN" type="TextureRect"]
 offset_right = 50.0
 offset_bottom = 50.0
 size_flags_horizontal = 3

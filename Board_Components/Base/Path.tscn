@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhnpa1nvlo4bt"]
+
+[ext_resource type="Texture2D" uid="uid://b6byckkrxofvp" path="res://Images/Game/Path_Box.png" id="1_ucrgt"]
+
+[node name="PATH" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("1_ucrgt")
