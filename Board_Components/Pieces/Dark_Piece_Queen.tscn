@@ -3,8 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://ccaxexd7uiso6" path="res://Images/Pieces/Black/Piece_Queen.png" id="1_37txp"]
 
 [node name="DARK_QUEEN" type="TextureRect"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 50.0
+offset_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("1_37txp")
+expand_mode = 4

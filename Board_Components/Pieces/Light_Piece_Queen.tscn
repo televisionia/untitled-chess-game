@@ -3,8 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://b2jm4ed2sr6m2" path="res://Images/Pieces/White/Piece_Queen.png" id="1_hkn3a"]
 
 [node name="LIGHT_QUEEN" type="TextureRect"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 50.0
+offset_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("1_hkn3a")
+expand_mode = 4

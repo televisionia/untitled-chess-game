@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3fymhrdv3im5"]
+
+[ext_resource type="Texture2D" uid="uid://b8gsams5f0bay" path="res://Images/Base/Empty.png" id="1_kf4v7"]
+
+[node name="EMPTY" type="TextureRect"]
+offset_right = 50.0
+offset_bottom = 50.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_kf4v7")
+expand_mode = 4

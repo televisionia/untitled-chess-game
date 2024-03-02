@@ -3,8 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://ryvomr60x5o6" path="res://Images/Pieces/White/Piece_Knight.png" id="1_m3g10"]
 
 [node name="LIGHT_KNIGHT" type="TextureRect"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 50.0
+offset_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("1_m3g10")
+expand_mode = 4
