@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://5n3l053cq54"]
+
+[ext_resource type="Texture2D" uid="uid://bjg1kgjxo5jm3" path="res://Images/Pieces/White/Piece_Pawn.png" id="1_c4i6t"]
+
+[node name="LIGHT_PAWN" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_c4i6t")

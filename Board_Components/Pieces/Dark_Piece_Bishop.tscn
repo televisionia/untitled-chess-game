@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://5y56f04ufqb6"]
+
+[ext_resource type="Texture2D" uid="uid://dhlpxocpdija8" path="res://Images/Pieces/Black/Piece_Bishop.png" id="1_r05dv"]
+
+[node name="DARK_BISHOP" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_r05dv")

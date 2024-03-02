@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://uajdx5xftmi6"]
+
+[ext_resource type="Texture2D" uid="uid://d377o5l7h72j1" path="res://Images/Pieces/Black/Piece_Pawn.png" id="1_5rj7h"]
+
+[node name="DARK_PAWN" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_5rj7h")

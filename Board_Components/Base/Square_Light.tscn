@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxl5i4q5on0k"]
+
+[ext_resource type="Texture2D" uid="uid://cp2euyngkxvko" path="res://Images/Base/Square_Light.png" id="1_n6lmn"]
+
+[node name="LIGHT" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_n6lmn")

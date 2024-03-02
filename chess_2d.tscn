@@ -10,7 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Board" type="ColorRect" parent="."]
+[node name="BoardDetails" type="GridContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -23,9 +23,7 @@ offset_right = 200.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="BoardDetails" type="GridContainer" parent="Board"]
-layout_mode = 0
-offset_right = 400.0
-offset_bottom = 400.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 8
 script = ExtResource("1_6dm0e")

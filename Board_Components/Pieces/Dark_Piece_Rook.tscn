@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b404hfioyh6k7"]
+
+[ext_resource type="Texture2D" uid="uid://bs74nfoflcse7" path="res://Images/Pieces/Black/Piece_Rook.png" id="1_re3cl"]
+
+[node name="DARK_ROOK" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_re3cl")

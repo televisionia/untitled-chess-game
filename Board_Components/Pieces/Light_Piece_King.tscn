@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwfi6h3n1ehxj"]
+
+[ext_resource type="Texture2D" uid="uid://10dx3r0jqrdl" path="res://Images/Pieces/White/Piece_King.png" id="1_7n5m2"]
+
+[node name="LIGHT_KING" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_7n5m2")

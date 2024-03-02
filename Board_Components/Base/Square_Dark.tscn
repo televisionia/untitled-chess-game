@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://xscqwm2p1ccy"]
+
+[ext_resource type="Texture2D" uid="uid://ckp0x8m5h78gf" path="res://Images/Base/Square_Dark.png" id="1_qa66l"]
+
+[node name="DARK" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_qa66l")

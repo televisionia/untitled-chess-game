@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bndy1k0q4376f"]
+
+[ext_resource type="Texture2D" uid="uid://bjnqfkaets0ly" path="res://Images/Pieces/Black/Piece_King.png" id="1_ie7ln"]
+
+[node name="DARK_KING" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_ie7ln")
