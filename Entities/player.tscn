@@ -93,6 +93,7 @@ stream_2/stream = ExtResource("14_lpsqk")
 stream_2/weight = 1.0
 
 [node name="Player" type="CharacterBody2D"]
+visible = false
 z_index = 10
 script = ExtResource("1_32ce6")
 
@@ -117,12 +118,12 @@ drag_bottom_margin = 0.1
 
 [node name="BaseLight" type="PointLight2D" parent="."]
 texture = SubResource("GradientTexture2D_nbtev")
-texture_scale = 2.0
+texture_scale = 0.01
 
 [node name="CollidingLight" type="PointLight2D" parent="."]
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_0uhc7")
-texture_scale = 3.0
+texture_scale = 0.01
 
 [node name="Sounds" type="Node2D" parent="."]
 
