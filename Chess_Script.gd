@@ -671,15 +671,16 @@ func _path_selected(path):
 	var piece_row = (piece_index - piece_index % BOARD_COLUMNS) / BOARD_ROWS
 	
 	if location_column >= 0 and location_column < BOARD_COLUMNS and location_row >= 0 and location_row < BOARD_ROWS:
-		if piece_slots[location_row][location_column] == SLOT_ID.EMPTY:
-			get_node("Sounds/Move").play()
-		else:
-			get_node("Sounds/Kill").play()
-		piece_slots[location_row][location_column] = piece_slots[piece_row][piece_column]
-		piece_slots[piece_row][piece_column] = SLOT_ID.EMPTY
-	setup_overlay(OVERLAY_LAYER)
-	draw_layer(OVERLAY_LAYER)
-	draw_layer(PIECE_LAYER)
+		get_tree().change_scene_to_file("res://inside_piece.tscn")
+		#if piece_slots[location_row][location_column] == SLOT_ID.EMPTY:
+			#get_node("Sounds/Move").play()
+		#else:
+			#get_node("Sounds/Kill").play()
+		#piece_slots[location_row][location_column] = piece_slots[piece_row][piece_column]
+		#piece_slots[piece_row][piece_column] = SLOT_ID.EMPTY
+	#setup_overlay(OVERLAY_LAYER)
+	#draw_layer(OVERLAY_LAYER)
+	#draw_layer(PIECE_LAYER)
 
 # Called when the node enters the scene tree for the first time.Piece_Control
 func _ready():

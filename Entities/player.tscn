@@ -1,0 +1,132 @@
+[gd_scene load_steps=22 format=3 uid="uid://dm4ektlsuwlx2"]
+
+[ext_resource type="Script" path="res://Entities/player_script.gd" id="1_32ce6"]
+[ext_resource type="Texture2D" uid="uid://cl3jatespogf6" path="res://Images/Player/Idle.png" id="1_a62bf"]
+[ext_resource type="Texture2D" uid="uid://bgokhnkvfu61v" path="res://Images/Player/Idle_blink.png" id="2_j1lt2"]
+[ext_resource type="Texture2D" uid="uid://crnxih6rtthnc" path="res://Images/Player/Walk_1.png" id="3_c2ixq"]
+[ext_resource type="Texture2D" uid="uid://qyxho8vpau2t" path="res://Images/Player/Walk_2.png" id="4_5jdoy"]
+[ext_resource type="Texture2D" uid="uid://c3wjv5v25y3dv" path="res://Images/Player/Walk_3.png" id="5_ro8p0"]
+[ext_resource type="Texture2D" uid="uid://c8ka7c6barvrk" path="res://Images/Player/Walk_4.png" id="6_pddi7"]
+[ext_resource type="Texture2D" uid="uid://c1lrj576tl8ms" path="res://Images/Player/Walk_5.png" id="7_ybeyp"]
+[ext_resource type="Texture2D" uid="uid://dthdfcm3jskio" path="res://Images/Player/Walk_6.png" id="8_7owd2"]
+[ext_resource type="Texture2D" uid="uid://dumaknq61jo1a" path="res://Images/Player/Walk_7.png" id="9_qgd63"]
+[ext_resource type="Texture2D" uid="uid://c65plx1v4cqg" path="res://Images/Player/Walk_8.png" id="10_ugmfo"]
+[ext_resource type="AudioStream" uid="uid://c5y3m5kxs8l6t" path="res://Sounds/Step_1.wav" id="12_qgjdf"]
+[ext_resource type="AudioStream" uid="uid://dhqb8o6maj0h7" path="res://Sounds/Step_2.wav" id="13_3qm3e"]
+[ext_resource type="AudioStream" uid="uid://bpf1iqt1lg2rv" path="res://Sounds/Step_3.wav" id="14_lpsqk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qifcb"]
+animations = [{
+"frames": [{
+"duration": 20.0,
+"texture": ExtResource("1_a62bf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_j1lt2")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_c2ixq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5jdoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ro8p0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_pddi7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ybeyp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_7owd2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_qgd63")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ugmfo")
+}],
+"loop": false,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hbyvc"]
+size = Vector2(10, 15)
+
+[sub_resource type="Gradient" id="Gradient_i8wtr"]
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.72428)
+colors = PackedColorArray(0.255659, 0.255659, 0.255659, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nbtev"]
+gradient = SubResource("Gradient_i8wtr")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_5fhyb"]
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.757202)
+colors = PackedColorArray(0.654232, 0.654232, 0.654232, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0uhc7"]
+gradient = SubResource("Gradient_5fhyb")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_robjy"]
+streams_count = 3
+stream_0/stream = ExtResource("12_qgjdf")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("13_3qm3e")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("14_lpsqk")
+stream_2/weight = 1.0
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 10
+script = ExtResource("1_32ce6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -6)
+sprite_frames = SubResource("SpriteFrames_qifcb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_hbyvc")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+
+[node name="BaseLight" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_nbtev")
+texture_scale = 2.0
+
+[node name="CollidingLight" type="PointLight2D" parent="."]
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_0uhc7")
+texture_scale = 3.0
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="Step" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_robjy")
+
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
