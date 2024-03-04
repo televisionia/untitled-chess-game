@@ -1,11 +1,24 @@
 extends CharacterBody2D
 
 @onready var _animated_sprite = $AnimatedSprite2D
+@onready var RAYCAST_LEFT = $RayCastLeft
+@onready var RAYCAST_RIGHT = $RayCastRight
+@onready var BASE_LIGHT = $BaseLight
+@onready var COLLIDING_LIGHT = $CollidingLight
+@onready var WALL_JUMP_TIMER = $WallJumpTimer
 
 const BASE_SPEED = 100.0
+const MAX_SPEED = 120.0
 var CURRENT_SPEED = 0
 const JUMP_VELOCITY = -200.0
 var CURRENT_JUMP_VELOCITY = 0
+const WALL_JUMP_VELOCITY = 200
+
+const WALL_JUMP_TIME = 0.2
+
+var WALL_JUMP_COOLDOWN = false
+
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -45,16 +58,30 @@ func _process(delta):
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
-
-	if Input.is_action_just_pressed("move_up") and is_on_floor() and CURRENT_JUMP_VELOCITY != 0:
-		velocity.y = CURRENT_JUMP_VELOCITY
-		get_node("Sounds/Step").play()
-
+	
 	var direction = Input.get_axis("move_left", "move_right")
-	if direction:
-		velocity.x = direction * CURRENT_SPEED
-	else:
+	if direction and WALL_JUMP_COOLDOWN == false:
+		velocity.x = move_toward(velocity.x, direction * CURRENT_SPEED, CURRENT_SPEED)
+	elif is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, CURRENT_SPEED)
-
+	else:
+		velocity.x = move_toward(velocity.x, 0, delta)
+	
+	if Input.is_action_just_pressed("move_up") and CURRENT_JUMP_VELOCITY != 0:
+		if is_on_floor():
+			velocity.y = CURRENT_JUMP_VELOCITY
+			get_node("Sounds/Step").play()
+		else:
+			if (RAYCAST_LEFT.is_colliding() or RAYCAST_RIGHT.is_colliding()) and WALL_JUMP_COOLDOWN == false:
+				velocity.y = JUMP_VELOCITY
+				WALL_JUMP_COOLDOWN = true
+				WALL_JUMP_TIMER.start(WALL_JUMP_TIME)
+				if RAYCAST_LEFT.is_colliding():
+					velocity.x = WALL_JUMP_VELOCITY
+				if RAYCAST_RIGHT.is_colliding():
+					velocity.x = -WALL_JUMP_VELOCITY
+	
 	move_and_slide()
 
+func _on_wall_jump_timer_timeout():
+	WALL_JUMP_COOLDOWN = false
