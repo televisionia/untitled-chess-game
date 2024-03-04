@@ -47,6 +47,11 @@ move_up={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="default"
+2d_physics/layer_2="interactables"
+
 [physics]
 
 2d/default_gravity=500.0

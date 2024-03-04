@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://twq5o7q16dqo"]
+
+[ext_resource type="Texture2D" uid="uid://cp2euyngkxvko" path="res://Images/Base/Square_Light.png" id="1_ab6e3"]
+[ext_resource type="Script" path="res://Objects/Level_End.gd" id="1_xpu6a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_id5cs"]
+size = Vector2(50, 50)
+
+[node name="LevelEnd" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_xpu6a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ab6e3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_id5cs")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

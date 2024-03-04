@@ -1,5 +1,4 @@
 extends Control
-
 # For identifying what sprite to render on each slot
 enum SLOT_ID {EMPTY, SQUARE_LIGHT, SQUARE_DARK, PATH,
 LIGHT_PIECE_PAWN, LIGHT_PIECE_ROOK, LIGHT_PIECE_KNIGHT, LIGHT_PIECE_BISHOP, LIGHT_PIECE_QUEEN, LIGHT_PIECE_KING,
@@ -21,9 +20,11 @@ preload("res://Board_Components/Pieces/Dark_Piece_Knight.tscn"), preload("res://
 preload("res://Board_Components/Pieces/Dark_Piece_Queen.tscn"), preload("res://Board_Components/Pieces/Dark_Piece_King.tscn")
 ]
 
-var PIECE_BUTTON = preload("res://Piece_Control.tscn")
+@onready var PIECE_BUTTON = preload("res://Piece_Control.tscn")
 
-var PATH_BUTTON = preload("res://Path_Control.tscn")
+@onready var PATH_BUTTON = preload("res://Path_Control.tscn")
+
+@onready var PIECE_INSIDE = preload("res://inside_piece.tscn")
 
 var SELECTED_PIECE = null
 
@@ -38,6 +39,9 @@ var LAYER_OBJECT = preload("res://Layer.tscn")
 var BASE_LAYER = 0
 var PIECE_LAYER = 1
 var OVERLAY_LAYER = 2
+
+
+
 
 func make_layer(layer):
 	LAYERS.insert(layer, [])
@@ -671,19 +675,22 @@ func _path_selected(path):
 	var piece_row = (piece_index - piece_index % BOARD_COLUMNS) / BOARD_ROWS
 	
 	if location_column >= 0 and location_column < BOARD_COLUMNS and location_row >= 0 and location_row < BOARD_ROWS:
-		get_tree().change_scene_to_file("res://inside_piece.tscn")
-		#if piece_slots[location_row][location_column] == SLOT_ID.EMPTY:
-			#get_node("Sounds/Move").play()
-		#else:
-			#get_node("Sounds/Kill").play()
-		#piece_slots[location_row][location_column] = piece_slots[piece_row][piece_column]
-		#piece_slots[piece_row][piece_column] = SLOT_ID.EMPTY
-	#setup_overlay(OVERLAY_LAYER)
-	#draw_layer(OVERLAY_LAYER)
-	#draw_layer(PIECE_LAYER)
+		var get_root = get_tree().root
+		get_root.remove_child(self)
+		get_root.add_child(PIECE_INSIDE.instantiate())
+		if piece_slots[location_row][location_column] == SLOT_ID.EMPTY:
+			get_node("Sounds/Move").play()
+		else:
+			get_node("Sounds/Kill").play()
+		piece_slots[location_row][location_column] = piece_slots[piece_row][piece_column]
+		piece_slots[piece_row][piece_column] = SLOT_ID.EMPTY
+	setup_overlay(OVERLAY_LAYER)
+	draw_layer(OVERLAY_LAYER)
+	draw_layer(PIECE_LAYER)
 
 # Called when the node enters the scene tree for the first time.Piece_Control
 func _ready():
+	GLOBAL.CHESS_SCENE = self
 	setup_base(BASE_LAYER)
 	setup_pieces(PIECE_LAYER)
 	setup_overlay(OVERLAY_LAYER)

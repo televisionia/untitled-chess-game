@@ -1,5 +1,4 @@
 extends Node2D
-
 var MAP = load("res://Maps/" + GLOBAL.NEXT_MAP + ".tscn")
 
 var PLAYER = preload("res://Entities/player.tscn")
