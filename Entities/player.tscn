@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dm4ektlsuwlx2"]
+[gd_scene load_steps=23 format=3 uid="uid://dm4ektlsuwlx2"]
 
 [ext_resource type="Script" path="res://Entities/player_script.gd" id="1_32ce6"]
 [ext_resource type="Texture2D" uid="uid://cl3jatespogf6" path="res://Images/Player/Idle.png" id="1_a62bf"]
@@ -6,14 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://crnxih6rtthnc" path="res://Images/Player/Walk_1.png" id="3_c2ixq"]
 [ext_resource type="Texture2D" uid="uid://qyxho8vpau2t" path="res://Images/Player/Walk_2.png" id="4_5jdoy"]
 [ext_resource type="Texture2D" uid="uid://c3wjv5v25y3dv" path="res://Images/Player/Walk_3.png" id="5_ro8p0"]
+[ext_resource type="Texture2D" uid="uid://b3uw55qh28nkt" path="res://Images/Player/On_wall.png" id="5_yiwmh"]
 [ext_resource type="Texture2D" uid="uid://c8ka7c6barvrk" path="res://Images/Player/Walk_4.png" id="6_pddi7"]
 [ext_resource type="Texture2D" uid="uid://c1lrj576tl8ms" path="res://Images/Player/Walk_5.png" id="7_ybeyp"]
 [ext_resource type="Texture2D" uid="uid://dthdfcm3jskio" path="res://Images/Player/Walk_6.png" id="8_7owd2"]
 [ext_resource type="Texture2D" uid="uid://dumaknq61jo1a" path="res://Images/Player/Walk_7.png" id="9_qgd63"]
 [ext_resource type="Texture2D" uid="uid://c65plx1v4cqg" path="res://Images/Player/Walk_8.png" id="10_ugmfo"]
-[ext_resource type="AudioStream" uid="uid://c5y3m5kxs8l6t" path="res://Sounds/Step_1.wav" id="12_qgjdf"]
-[ext_resource type="AudioStream" uid="uid://dhqb8o6maj0h7" path="res://Sounds/Step_2.wav" id="13_3qm3e"]
-[ext_resource type="AudioStream" uid="uid://bpf1iqt1lg2rv" path="res://Sounds/Step_3.wav" id="14_lpsqk"]
+[ext_resource type="AudioStream" uid="uid://bmtkubtrwk13n" path="res://Sounds/Step_1.ogg" id="13_ggwg4"]
+[ext_resource type="AudioStream" uid="uid://b4cv4dq01y408" path="res://Sounds/Step_2.ogg" id="14_6qat5"]
+[ext_resource type="AudioStream" uid="uid://c8h2plvhn48kl" path="res://Sounds/Step_3.ogg" id="15_vm1j6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qifcb"]
 animations = [{
@@ -26,6 +27,22 @@ animations = [{
 }],
 "loop": false,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_c2ixq")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_yiwmh")
+}],
+"loop": true,
+"name": &"on_wall",
 "speed": 5.0
 }, {
 "frames": [{
@@ -85,11 +102,11 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_robjy"]
 streams_count = 3
-stream_0/stream = ExtResource("12_qgjdf")
+stream_0/stream = ExtResource("13_ggwg4")
 stream_0/weight = 1.0
-stream_1/stream = ExtResource("13_3qm3e")
+stream_1/stream = ExtResource("14_6qat5")
 stream_1/weight = 1.0
-stream_2/stream = ExtResource("14_lpsqk")
+stream_2/stream = ExtResource("15_vm1j6")
 stream_2/weight = 1.0
 
 [node name="Player" type="CharacterBody2D"]
@@ -100,6 +117,7 @@ script = ExtResource("1_32ce6")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -6)
 sprite_frames = SubResource("SpriteFrames_qifcb")
+animation = &"jump"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.5)
@@ -131,10 +149,10 @@ texture_scale = 0.01
 stream = SubResource("AudioStreamRandomizer_robjy")
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
-target_position = Vector2(-10, 0)
+target_position = Vector2(-8, 0)
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
-target_position = Vector2(10, 0)
+target_position = Vector2(8, 0)
 
 [node name="WallJumpTimer" type="Timer" parent="."]
 

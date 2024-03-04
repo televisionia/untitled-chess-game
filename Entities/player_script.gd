@@ -45,12 +45,26 @@ func _on_animated_sprite_2d_frame_changed():
 
 func _process(delta):
 	if CURRENT_SPEED > 0:
-		if Input.is_action_pressed("move_left") and is_on_floor():
+		if Input.is_action_pressed("move_left"):
 			_animated_sprite.scale.x = 1
-			_animated_sprite.play("walk")
-		elif Input.is_action_pressed("move_right") and is_on_floor():
+			
+			if is_on_floor():
+				_animated_sprite.play("walk")
+			elif RAYCAST_LEFT.is_colliding():
+				_animated_sprite.play("on_wall")
+			else:
+				_animated_sprite.play("jump")
+				
+		elif Input.is_action_pressed("move_right"):
 			_animated_sprite.scale.x = -1
-			_animated_sprite.play("walk")
+			
+			if is_on_floor():
+				_animated_sprite.play("walk")
+			elif RAYCAST_RIGHT.is_colliding():
+				_animated_sprite.play("on_wall")
+			else:
+				_animated_sprite.play("jump")
+				
 		else:
 			_animated_sprite.scale.x = 1
 			_animated_sprite.play("default")
@@ -58,6 +72,8 @@ func _process(delta):
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
+		if (RAYCAST_LEFT.is_colliding() and Input.is_action_pressed("move_left")) or (RAYCAST_RIGHT.is_colliding() and Input.is_action_pressed("move_right")):
+			velocity.y -= velocity.y / 5
 	
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction and WALL_JUMP_COOLDOWN == false:
@@ -72,8 +88,9 @@ func _physics_process(delta):
 			velocity.y = CURRENT_JUMP_VELOCITY
 			get_node("Sounds/Step").play()
 		else:
-			if (RAYCAST_LEFT.is_colliding() or RAYCAST_RIGHT.is_colliding()) and WALL_JUMP_COOLDOWN == false:
-				velocity.y = JUMP_VELOCITY
+			if ((RAYCAST_LEFT.is_colliding() or RAYCAST_RIGHT.is_colliding()) and (Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"))) and WALL_JUMP_COOLDOWN == false:
+				get_node("Sounds/Step").play()
+				velocity.y = JUMP_VELOCITY * 0.8
 				WALL_JUMP_COOLDOWN = true
 				WALL_JUMP_TIMER.start(WALL_JUMP_TIME)
 				if RAYCAST_LEFT.is_colliding():
