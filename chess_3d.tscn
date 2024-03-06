@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=3 uid="uid://omgsrsvtrmi8"]
+
+[ext_resource type="Script" path="res://chess_3d_handler.gd" id="1_dgr40"]
+[ext_resource type="PackedScene" uid="uid://oemgtdayqxg4" path="res://3d_Board/chess_board.tscn" id="3_12kh1"]
+[ext_resource type="Shader" path="res://3d_Board/3d_shader.gdshader" id="3_eelrw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_68yb1"]
+render_priority = 0
+shader = ExtResource("3_eelrw")
+shader_parameter/depth_threshold = 0.05
+shader_parameter/reverse_depth_threshold = 0.25
+shader_parameter/normal_threshold = 0.2
+shader_parameter/darken_amount = 0.3
+shader_parameter/lighten_amount = 1.5
+shader_parameter/normal_edge_bias = Vector3(1, 1, 1)
+shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_2q8nt"]
+material = SubResource("ShaderMaterial_68yb1")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="Sky" id="Sky_h71r4"]
+
+[sub_resource type="Environment" id="Environment_fi6bs"]
+background_mode = 1
+sky = SubResource("Sky_h71r4")
+ambient_light_source = 3
+ambient_light_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.01
+reflected_light_source = 1
+
+[sub_resource type="Gradient" id="Gradient_okfun"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yy570"]
+gradient = SubResource("Gradient_okfun")
+fill = 1
+fill_from = Vector2(0.512821, 0.504274)
+fill_to = Vector2(0, 0.017094)
+
+[node name="Chess3D" type="Node3D"]
+script = ExtResource("1_dgr40")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(640, 480)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.999989, 0.00351963, -0.00305081, -0.00290751, 0.983389, 0.181488, 0.0036389, -0.181477, 0.983388, 0.337049, 10.6209, 37.749)
+current = true
+
+[node name="PostProcessing" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Camera3D"]
+transform = Transform3D(0.99999, -0.00290751, 0.0036389, 0.00351963, 0.983389, -0.181477, -0.00305081, 0.181488, 0.983389, -0.425911, -9.55413, -40.1483)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_2q8nt")
+skeleton = NodePath("../..")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_fi6bs")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
+light_energy = 2.0
+light_projector = SubResource("GradientTexture2D_yy570")
+shadow_enabled = true
+spot_range = 75.0
+
+[node name="chess_board" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_12kh1")]

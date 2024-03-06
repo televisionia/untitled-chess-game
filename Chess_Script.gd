@@ -40,14 +40,8 @@ var BASE_LAYER = 0
 var PIECE_LAYER = 1
 var OVERLAY_LAYER = 2
 
-
-
-
 func make_layer(layer):
 	LAYERS.insert(layer, [])
-
-
-
 
 func setup_base(layer):
 	make_layer(layer)
@@ -675,6 +669,7 @@ func _path_selected(path):
 	var piece_row = (piece_index - piece_index % BOARD_COLUMNS) / BOARD_ROWS
 	
 	if location_column >= 0 and location_column < BOARD_COLUMNS and location_row >= 0 and location_row < BOARD_ROWS:
+		GLOBAL.CHESS_BOARD_SETUP = LAYERS
 		var get_root = get_tree().root
 		get_root.remove_child(self)
 		get_root.add_child(PIECE_INSIDE.instantiate())
