@@ -7,10 +7,10 @@ extends CharacterBody2D
 @onready var COLLIDING_LIGHT = $CollidingLight
 @onready var WALL_JUMP_TIMER = $WallJumpTimer
 
-const BASE_SPEED = 100.0
-const MAX_SPEED = 120.0
+const BASE_SPEED = 200.0
+const MAX_SPEED = 220.0
 var CURRENT_SPEED = 0
-const JUMP_VELOCITY = -200.0
+const JUMP_VELOCITY = -500.0
 var CURRENT_JUMP_VELOCITY = 0
 const WALL_JUMP_VELOCITY = 200
 

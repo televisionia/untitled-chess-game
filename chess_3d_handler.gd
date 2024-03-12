@@ -2,7 +2,7 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	await get_tree().create_timer(3.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	
 	var get_root = get_node("/root")
 	var parent = get_node("/root/Chess3D")

@@ -416,7 +416,7 @@ func _piece_selected(piece):
 				[2,-2],
 				[3,-3],
 				[4,-4],
-				[5,5],
+				[5,-5],
 				[6,-6],
 				[7,-7],
 				[8,-8],
@@ -669,10 +669,21 @@ func _path_selected(path):
 	var piece_row = (piece_index - piece_index % BOARD_COLUMNS) / BOARD_ROWS
 	
 	if location_column >= 0 and location_column < BOARD_COLUMNS and location_row >= 0 and location_row < BOARD_ROWS:
-		GLOBAL.CHESS_BOARD_SETUP = LAYERS
+		GLOBAL.TO_MOVE[0][0] = piece_column
+		GLOBAL.TO_MOVE[0][1] = piece_row
+		GLOBAL.TO_MOVE[0][2] = piece_slots[piece_row][piece_column]
+		
+		GLOBAL.TO_MOVE[1][0] = location_column
+		GLOBAL.TO_MOVE[1][1] = location_row
+		GLOBAL.TO_MOVE[1][2] = piece_slots[location_row][location_column]
+		
 		var get_root = get_tree().root
 		get_root.remove_child(self)
 		get_root.add_child(PIECE_INSIDE.instantiate())
+		
+		await tree_entered
+		await get_tree().create_timer(0.01).timeout
+		
 		if piece_slots[location_row][location_column] == SLOT_ID.EMPTY:
 			get_node("Sounds/Move").play()
 		else:
@@ -685,6 +696,7 @@ func _path_selected(path):
 
 # Called when the node enters the scene tree for the first time.Piece_Control
 func _ready():
+	GLOBAL.CHESS_BOARD_SETUP = LAYERS
 	GLOBAL.CHESS_SCENE = self
 	setup_base(BASE_LAYER)
 	setup_pieces(PIECE_LAYER)

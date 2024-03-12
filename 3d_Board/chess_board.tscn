@@ -543,7 +543,6 @@ mesh = SubResource("ArrayMesh_ccc1u")
 skeleton = NodePath("")
 
 [node name="PiecesStorage" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.1924, 0, 0)
 visible = false
 
 [node name="Dark_Queen" type="MeshInstance3D" parent="PiecesStorage"]
@@ -572,7 +571,7 @@ mesh = SubResource("ArrayMesh_udfkw")
 skeleton = NodePath("")
 
 [node name="Light_Bishop" type="MeshInstance3D" parent="PiecesStorage"]
-transform = Transform3D(-0.999869, 0, -0.0161971, 0, 1, 0, 0.0161971, 0, -0.999869, 9.00001, -4.76837e-07, 21)
+transform = Transform3D(-0.999869, 0, -0.0161971, 0, 1, 0, 0.0161971, 0, -0.999869, 21, 0, 21)
 mesh = SubResource("ArrayMesh_aplpv")
 skeleton = NodePath("")
 
