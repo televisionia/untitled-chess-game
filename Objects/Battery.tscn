@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://3rif63adjpnm"]
+
+[ext_resource type="Texture2D" uid="uid://ddlu2q1yqyksr" path="res://Images/Battery/battery.png" id="1_5usex"]
+[ext_resource type="Script" path="res://Objects/Battery_Script.gd" id="1_eb2k2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_02m01"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a2l6l"]
+size = Vector2(12, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rsx6m"]
+size = Vector2(18, 24)
+
+[node name="Battery" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_02m01")
+lock_rotation = true
+script = ExtResource("1_eb2k2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5usex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_a2l6l")
+
+[node name="Pickup" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup"]
+shape = SubResource("RectangleShape2D_rsx6m")
+
+[connection signal="body_entered" from="Pickup" to="." method="_on_pickup_body_entered"]

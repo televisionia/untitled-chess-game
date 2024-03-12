@@ -97,6 +97,9 @@ func _physics_process(delta):
 					velocity.x = WALL_JUMP_VELOCITY
 				if RAYCAST_RIGHT.is_colliding():
 					velocity.x = -WALL_JUMP_VELOCITY
+					
+	if GLOBAL.CURRENT_PLAYER_ITEM != null:
+		GLOBAL.CURRENT_PLAYER_ITEM.position = Vector2(0, -20)
 	
 	move_and_slide()
 

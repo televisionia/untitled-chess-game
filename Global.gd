@@ -12,3 +12,6 @@ var CHESS_BOARD_SETUP
 #Two slots, 1 is start, 2 is to swap with
 #Column, Row, SLOT_ID
 var TO_MOVE = [[0,0,0], [0,0,0]]
+
+var CURRENT_PLAYER
+var CURRENT_PLAYER_ITEM
