@@ -1,9 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsen1tchqek47"]
+[gd_scene load_steps=5 format=3 uid="uid://bsen1tchqek47"]
 
 [ext_resource type="Script" path="res://Level_Setup.gd" id="1_2nqku"]
+[ext_resource type="Script" path="res://ControlFader.gd" id="2_h2cm1"]
+
+[sub_resource type="SystemFont" id="SystemFont_xpmyq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5pbth"]
+font = SubResource("SystemFont_xpmyq")
 
 [node name="InsidePiece" type="Node2D"]
 script = ExtResource("1_2nqku")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0, 0, 0, 1)
+
+[node name="ControlsHolder" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("2_h2cm1")
+
+[node name="ControlsLabel" type="Label" parent="ControlsHolder"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 162.0
+grow_vertical = 0
+text = "hello!!"
+label_settings = SubResource("LabelSettings_5pbth")

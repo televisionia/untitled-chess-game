@@ -1,0 +1,73 @@
+[gd_scene load_steps=12 format=3 uid="uid://dyq7fd7n16ocp"]
+
+[ext_resource type="Texture2D" uid="uid://bqd0u6b3ttnr5" path="res://Images/Explosion/explosion.png" id="1_bn8k1"]
+[ext_resource type="Script" path="res://Objects/explosion_effect.gd" id="2_7tbph"]
+[ext_resource type="AudioStream" uid="uid://cg5hput1x0e0" path="res://Sounds/Explode.ogg" id="3_3378a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aol2d"]
+atlas = ExtResource("1_bn8k1")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w56cf"]
+atlas = ExtResource("1_bn8k1")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kikl6"]
+atlas = ExtResource("1_bn8k1")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15ybn"]
+atlas = ExtResource("1_bn8k1")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gewwx"]
+atlas = ExtResource("1_bn8k1")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kglk7"]
+atlas = ExtResource("1_bn8k1")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vb2aj"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aol2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w56cf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kikl6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15ybn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gewwx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kglk7")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 14.0
+}]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1y8o1"]
+streams_count = 1
+stream_0/stream = ExtResource("3_3378a")
+stream_0/weight = 1.0
+
+[node name="Explosion" type="AnimatedSprite2D"]
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_vb2aj")
+script = ExtResource("2_7tbph")
+
+[node name="Explode" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_1y8o1")

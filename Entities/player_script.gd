@@ -28,8 +28,8 @@ var counter = 1
 func _ready():
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)
-	tween.tween_property($BaseLight, "texture_scale", 3, 1)
-	tween.tween_property($CollidingLight, "texture_scale", 3, 3)
+	tween.tween_property($BaseLight, "energy", 1, 1)
+	tween.tween_property($CollidingLight, "energy", 1, 1)
 	visible = true
 	await tween.finished
 	CURRENT_JUMP_VELOCITY = JUMP_VELOCITY
@@ -76,9 +76,12 @@ func _physics_process(delta):
 			velocity.y -= velocity.y / 5
 	
 	var direction = Input.get_axis("move_left", "move_right")
+	if Input.is_action_pressed("move_down"):
+		velocity.y -= delta * CURRENT_JUMP_VELOCITY * 5
+	
 	if direction and WALL_JUMP_COOLDOWN == false:
 		velocity.x = move_toward(velocity.x, direction * CURRENT_SPEED, CURRENT_SPEED)
-	elif is_on_floor():
+	elif is_on_floor() or Input.is_action_pressed("move_down"):
 		velocity.x = move_toward(velocity.x, 0, CURRENT_SPEED)
 	else:
 		velocity.x = move_toward(velocity.x, 0, delta)

@@ -136,13 +136,15 @@ drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 
 [node name="BaseLight" type="PointLight2D" parent="."]
+energy = 0.0
 texture = SubResource("GradientTexture2D_nbtev")
-texture_scale = 0.01
+texture_scale = 2.0
 
 [node name="CollidingLight" type="PointLight2D" parent="."]
+energy = 0.0
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_0uhc7")
-texture_scale = 0.01
+texture_scale = 3.0
 
 [node name="Sounds" type="Node2D" parent="."]
 
